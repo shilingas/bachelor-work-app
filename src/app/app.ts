@@ -1,5 +1,6 @@
-import { Component, signal } from '@angular/core';
+import {Component, inject, signal} from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import {DataService} from './data-service';
 
 @Component({
   selector: 'app-root',
@@ -9,4 +10,11 @@ import { RouterOutlet } from '@angular/router';
 })
 export class App {
   protected readonly title = signal('bachelor-work-app');
+  private readonly httpService = inject(DataService);
+  constructor() {
+
+    this.httpService.getData().subscribe(data => {
+      console.log(data);
+    })
+  }
 }
