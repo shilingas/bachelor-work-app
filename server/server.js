@@ -1,15 +1,26 @@
 const express = require('express');
 const path = require('path');
+const pool = require('./db');
+
 const app = express();
 const port = 3000;
 
 app.use(express.json());
-app.use(express.static(path.join(__dirname, '../dist/browser')));
 
-// Example API route
 app.get('/api/hello', (req, res) => {
-  res.json({ message: 'test' });
+  res.json({ message: 'API is working!' });
 });
+
+app.get('/api/test-db', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT NOW()');
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+});
+
+app.use(express.static(path.join(__dirname, '../dist/browser')));
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../dist/browser/index.html'));
