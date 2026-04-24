@@ -6,10 +6,11 @@ COPY package*.json ./
 RUN npm install --production
 
 COPY server ./server
-
 COPY dist/bachelor-work-app/browser ./dist/browser
 
 WORKDIR /app/server
 
 EXPOSE 3000
+EXPOSE 3001
+
 CMD ["node", "server.js"]

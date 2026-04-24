@@ -1,0 +1,14 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: bachelor-app-monitor
+  labels:
+    release: monitoring
+spec:
+  selector:
+    matchLabels:
+      app: bachelor-app
+  endpoints:
+    - port: metrics
+      path: /metrics
+      interval: 15s
